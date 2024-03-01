@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/m1"/>
+    <qresource prefix="/">
+        <file>Course2.csv</file>
+        <file>Students1.csv</file>
+    </qresource>
+</RCC>
