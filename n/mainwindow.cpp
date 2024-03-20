@@ -4,7 +4,6 @@
 #include <QDebug>
 #include <QMovie>
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -35,12 +34,8 @@ void MainWindow::loadCSVData()
     {
 
     QTextStream in(&file);
-
-        // Read the header line
         QString headerLine = in.readLine();
         QStringList headerLabels = headerLine.split(',');
-
-        // Set the header labels
         model->setHorizontalHeaderLabels(headerLabels);
 
     int row = 0;

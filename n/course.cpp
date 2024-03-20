@@ -14,6 +14,7 @@ Course::Course(QWidget *parent)
     ui->courseT->setModel(model);
 
     connect(ui->courseT, &QTableView::clicked, this, &Course::on_courseT_clicked);
+    ui->courseT->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 
 Course::~Course()
@@ -51,7 +52,6 @@ void Course::saveModelToCSV()
 
 void Course::on_courseT_clicked(const QModelIndex &index)
 {
-    // Store information about the selected item (row and column)
     selectedModelIndex = index;
 }
 
@@ -99,49 +99,71 @@ void Course::on_showC_clicked()
 
 void Course::on_addC_clicked()
 {
-    QString cC = ui->courseC->text();
-    QString cN = ui->courseN->text();
+    QString cC = ui->courseC->text().trimmed();
+    QString cN = ui->courseN->text().trimmed();
 
-    QFile studentsFile("/Users/catherine/Downloads/1513/n/Course2.csv");  // Change the path accordingly
-    if (!studentsFile.open(QIODevice::ReadWrite | QIODevice::Append)) {
+    // Check if both course code and course name are not empty
+    if (cC.isEmpty() || cN.isEmpty()) {
+        QMessageBox::warning(this, "Missing Information", "Please enter both course code and course name.");
+        return;
+    }
+
+    // Check if the course already exists in the file
+    QFile file("/Users/catherine/Downloads/1513/n/Course2.csv");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        while (!in.atEnd()) {
+            QString line = in.readLine();
+            QStringList fields = line.split(",");
+            if (fields.size() >= 2 && fields[0] == cC && fields[1] == cN) {
+                QMessageBox::warning(this, "Duplicate Course", "The course already exists in the file.");
+                file.close();
+                return;
+            }
+        }
+        file.close();
+    } else {
+        QMessageBox::critical(this, "Error", "Unable to open the CSV file for reading.");
+        return;
+    }
+
+    // If the course does not exist, proceed to add it to the file
+    QFile courseFile("/Users/catherine/Downloads/1513/n/Course2.csv");
+    if (!courseFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
         QMessageBox::critical(this, "Error", "Unable to open the CSV file for writing.");
         return;
     }
-    QTextStream stream(&studentsFile);
+    QTextStream stream(&courseFile);
+    stream << cC << "," << cN;
+    courseFile.close();
 
-    // Append the entered data to the CSV file
-    stream << "\n" << cC << "," << cN;
+    // Reload data after adding the course
+    loadCSVData();
 
     QMessageBox::information(this, "Data Added", "Data added to the CSV file.");
-    studentsFile.close();  // Close the file after writing
 }
 
 void Course::on_deleteC_clicked()
 {
-    // Check if any item is selected
     if (!selectedModelIndex.isValid())
     {
         QMessageBox::warning(this, "Warning", "No item selected for deletion.");
         return;
     }
 
-    // Get the row from the selected index
     int rowToDelete = selectedModelIndex.row();
 
-    // Get the data from the selected row in the first file
     QString cC = model->data(model->index(selectedModelIndex.row(), 0)).toString();
 
-    // Remove the selected row from the model
     model->removeRow(rowToDelete);
 
-    // Save the changes back to the CSV file
     saveModelToCSV();
 
     // Clear the selected index
     selectedModelIndex = QModelIndex();
 
     // Open the second CSV file
-    QFile secondFile("/Users/catherine/Downloads/1513/n/Students1.csv"); // Change the path accordingly
+    QFile secondFile("/Users/catherine/Downloads/1513/n/Students1.csv");
     if (secondFile.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         QTextStream stream(&secondFile);
@@ -154,25 +176,23 @@ void Course::on_deleteC_clicked()
             QString line = stream.readLine();
             QStringList parts = line.split(',');
 
-            // Check if the line matches the data to be deleted in the 7th column
             if (parts.size() >= 7 && parts[6] == cC)
             {
                 dataRemoved = true;
-                continue; // Skip this line, don't add it to the lines list
+                continue;
             }
 
-            lines.append(line); // Add the line to the list
+            lines.append(line);
         }
 
-        secondFile.resize(0); // Clear the content of the file
+        secondFile.resize(0);
 
-        // Rewrite the remaining lines back to the second CSV file
         for (const QString &line : lines)
         {
             stream << line;
         }
 
-        secondFile.close(); // Close the second file
+        secondFile.close();
 
         if (dataRemoved)
         {
