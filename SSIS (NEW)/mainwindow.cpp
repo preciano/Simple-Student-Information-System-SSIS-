@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 void MainWindow::populateTableWidgets()
 {
     // Populate courseT
-    QFile courseFile("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (courseFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&courseFile);
 
@@ -55,7 +55,7 @@ void MainWindow::populateTableWidgets()
     }
 
     // Populate studentT
-    QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (studentFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&studentFile);
 
@@ -89,7 +89,7 @@ void MainWindow::populateCourseTable()
     // Clear the current content
     ui->courseT->setRowCount(0);
 
-    QFile courseFile("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (courseFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&courseFile);
 
@@ -123,7 +123,7 @@ void MainWindow::populateStudentTable()
     // Clear the current content
     ui->studentT->setRowCount(0);
 
-    QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (studentFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&studentFile);
 
@@ -178,7 +178,7 @@ void MainWindow::on_addButton1_clicked()
     QString course = ui->course->text();
 
     // Check if the course code exists in the Course2.csv file
-    QFile courseFile("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (!courseFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Unable to open the Course file for reading.");
         return;
@@ -202,7 +202,7 @@ void MainWindow::on_addButton1_clicked()
     }
 
     // Check if the ID already exists in the file
-    QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (studentFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&studentFile);
         while (!in.atEnd()) {
@@ -221,7 +221,7 @@ void MainWindow::on_addButton1_clicked()
     }
 
     // If the ID is not found and the course code is valid, proceed to add the data
-    QFile studentsFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentsFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (!studentsFile.open(QIODevice::ReadWrite | QIODevice::Append)) {
         QMessageBox::critical(this, "Error", "Unable to open the CSV file for writing.");
         return;
@@ -246,7 +246,7 @@ void MainWindow::on_deleteButton1_clicked()
 
     QString id = ui->studentT->item(currentRow, 3)->text();
 
-    QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (!studentFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Unable to open the file for reading.");
         return;
@@ -320,7 +320,7 @@ void MainWindow::on_saveButton_clicked()
     QString course = ui->course->text();
 
     // Check if the course code exists in the Course2.csv file
-    QFile courseFile("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (!courseFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Unable to open the Course file for reading.");
         return;
@@ -344,7 +344,7 @@ void MainWindow::on_saveButton_clicked()
     }
 
     // Check if the ID exists in the file
-    QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (!studentFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Unable to open the file for reading and writing.");
         return;
@@ -467,7 +467,7 @@ void MainWindow::on_addButton2_clicked()
     }
 
     // Check if the course already exists in the file
-    QFile file("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile file("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&file);
         while (!in.atEnd()) {
@@ -486,7 +486,7 @@ void MainWindow::on_addButton2_clicked()
     }
 
     // If the course does not exist, proceed to add it to the file
-    QFile courseFile("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (!courseFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
         QMessageBox::critical(this, "Error", "Unable to open the CSV file for writing.");
         return;
@@ -523,7 +523,7 @@ void MainWindow::on_deleteButton2_clicked()
     }
 
     // Update the CSV file to reflect the changes
-    QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+    QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
     if (!studentFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Unable to open the file for reading and writing.");
         return;
@@ -552,6 +552,36 @@ void MainWindow::on_deleteButton2_clicked()
         out << line << "\n";
     }
     studentFile.close();
+
+    // Update the Course2.csv file to remove the deleted course
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
+    if (!courseFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QMessageBox::critical(this, "Error", "Unable to open the Course2.csv file for reading and writing.");
+        return;
+    }
+
+    QStringList courseLines;
+    QTextStream courseIn(&courseFile);
+    while (!courseIn.atEnd()) {
+        QString line = courseIn.readLine();
+        QStringList fields = line.split(",");
+        if (fields.size() >= 1 && fields[0] == courseCode) {
+            continue; // Skip the line with the matching course code
+        }
+        courseLines.append(line);
+    }
+    courseFile.close();
+
+    if (!courseFile.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
+        QMessageBox::critical(this, "Error", "Unable to open the Course2.csv file for writing.");
+        return;
+    }
+
+    QTextStream courseOut(&courseFile);
+    for (const QString &line : courseLines) {
+        courseOut << line << "\n";
+    }
+    courseFile.close();
 
     // Remove the selected row from the course table widget
     ui->courseT->removeRow(currentRow);
@@ -609,7 +639,7 @@ void MainWindow::on_saveButton2_clicked()
     ui->courseT->item(currentRow, 1)->setText(name);
 
     // Update the data in the CSV file
-    QFile courseFile("/Users/catherine/Downloads/new CSV/SSIS/Course2.csv");
+    QFile courseFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Course2.csv");
     if (!courseFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QMessageBox::critical(this, "Error", "Unable to open the file for reading and writing.");
         return;
@@ -649,7 +679,7 @@ void MainWindow::on_saveButton2_clicked()
         }
 
         // Update the course for students in the CSV file
-        QFile studentFile("/Users/catherine/Downloads/new CSV/SSIS/Students1.csv");
+        QFile studentFile("C://Users//User//OneDrive//Documents//GitHub//Simple-Student-Information-System-SSIS-//SSIS (NEW)//Students1.csv");
         if (!studentFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
             QMessageBox::critical(this, "Error", "Unable to open the file for reading and writing.");
             return;
